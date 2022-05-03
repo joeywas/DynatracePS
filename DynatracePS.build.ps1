@@ -42,8 +42,8 @@ task Test {
     try {
         Write-Verbose -Message "Running PSScriptAnalyzer on Public functions"
         Invoke-ScriptAnalyzer ".\DynatracePS\Public" -Recurse
-        #Write-Verbose -Message "Running PSScriptAnalyzer on Private functions"
-        #Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
+        Write-Verbose -Message "Running PSScriptAnalyzer on Private functions"
+        Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
     }
     catch {
         Write-Warning "Couldn't run Script Analyzer"
@@ -154,7 +154,7 @@ task DebugBuild -if ($Configuration -eq "debug") {
                 foreach($s in $mylist){
                     if($s -match "Alias"){
                         # This assumes aliases are defined like so in functions
-                        # [Alias('Get-IvantiAsset')]
+                        # [Alias('Get-SomethingAlias')]
                         $alias = (($s.split(":")[3]).split("('")[1]).split("')")[0]
                         Write-Verbose -Message "Exporting Alias: $($alias) to Function: $($function)"
                         Add-Content -Path $ModuleFile -Value "Export-ModuleMember -Function $(($function.split('.')[0]).ToString()) -Alias $alias"
@@ -175,7 +175,7 @@ task DebugBuild -if ($Configuration -eq "debug") {
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-<# No private functions yet
+
     Write-Verbose -Message "Appending Private functions"
     Add-Content -Path $ModuleFile -Value "### --- PRIVATE FUNCTIONS --- ###"
     foreach($function in $privateFunctions.Name){
@@ -190,7 +190,6 @@ task DebugBuild -if ($Configuration -eq "debug") {
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-#>
 }
 
 task Build -if($Configuration -eq "Release"){
@@ -275,7 +274,7 @@ task Build -if($Configuration -eq "Release"){
                 foreach($s in $mylist){
                     if($s -match "Alias"){
                         # This assumes aliases are defined like so
-                        # [Alias('Get-IvantiAsset')]
+                        # [Alias('Get-SomethingAlias')]
                         $alias = (($s.split(":")[3]).split("('")[1]).split("')")[0]
                         Write-Verbose -Message "Exporting Alias: $($alias) to Function: $($function)"
                         Add-Content -Path $ModuleFile -Value "Export-ModuleMember -Function $(($function.split('.')[0]).ToString()) -Alias $alias"
@@ -296,7 +295,7 @@ task Build -if($Configuration -eq "Release"){
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-<#
+
     Write-Verbose -Message "Appending Private functions"
     Add-Content -Path $ModuleFile -Value "### --- PRIVATE FUNCTIONS --- ###"
     foreach($function in $privateFunctions.Name){
@@ -311,7 +310,7 @@ task Build -if($Configuration -eq "Release"){
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-#>
+
     Write-Verbose -Message "Updating Module Manifest with root module"
     try {
         Write-Verbose -Message "Updating the Module Manifest"
