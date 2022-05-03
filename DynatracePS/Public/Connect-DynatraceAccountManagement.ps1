@@ -11,7 +11,7 @@ function Connect-DynatraceAccountManagement {
 
     .PARAMETER AccountUuid
         Account UUID from Dynatrace
-    
+
     .PARAMETER GetNewToken
         Force getting a fresh token
 

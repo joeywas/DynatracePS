@@ -46,6 +46,8 @@ task Test {
         Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
     }
     catch {
+        Write-Warning "Couldn't run Script Analyzer"
+        $_
         throw "Couldn't run Script Analyzer"
     }
 
