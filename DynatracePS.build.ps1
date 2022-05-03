@@ -42,8 +42,8 @@ task Test {
     try {
         Write-Verbose -Message "Running PSScriptAnalyzer on Public functions"
         Invoke-ScriptAnalyzer ".\DynatracePS\Public" -Recurse
-        Write-Verbose -Message "Running PSScriptAnalyzer on Private functions"
-        Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
+        #Write-Verbose -Message "Running PSScriptAnalyzer on Private functions"
+        #Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
     }
     catch {
         Write-Warning "Couldn't run Script Analyzer"
