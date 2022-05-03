@@ -175,7 +175,7 @@ task DebugBuild -if ($Configuration -eq "debug") {
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-
+<# No private functions yet
     Write-Verbose -Message "Appending Private functions"
     Add-Content -Path $ModuleFile -Value "### --- PRIVATE FUNCTIONS --- ###"
     foreach($function in $privateFunctions.Name){
@@ -190,6 +190,7 @@ task DebugBuild -if ($Configuration -eq "debug") {
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
+#>
 }
 
 task Build -if($Configuration -eq "Release"){
@@ -295,7 +296,7 @@ task Build -if($Configuration -eq "Release"){
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-
+<#
     Write-Verbose -Message "Appending Private functions"
     Add-Content -Path $ModuleFile -Value "### --- PRIVATE FUNCTIONS --- ###"
     foreach($function in $privateFunctions.Name){
@@ -310,7 +311,7 @@ task Build -if($Configuration -eq "Release"){
             throw "Failed adding content to .psm1 for function: $($function)"
         }
     }
-
+#>
     Write-Verbose -Message "Updating Module Manifest with root module"
     try {
         Write-Verbose -Message "Updating the Module Manifest"
