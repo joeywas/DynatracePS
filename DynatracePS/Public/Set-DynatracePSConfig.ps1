@@ -29,6 +29,8 @@ function Set-DynatracePSConfig {
     [CmdletBinding()]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '',
         Justification='This function is trivial enough that we do not need ShouldProcess')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '',
+        Justification='There is no other easy way to do this. at least i can not come up with it at 1am')]
     Param (
 		[String]$EnvironmentID,
 		[String]$AccountUuid,
