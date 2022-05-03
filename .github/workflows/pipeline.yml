@@ -1,0 +1,86 @@
+name: Build Module
+on:
+    #pull_request: # Only trigger the workflow if there is a pull request to the main branch
+    #    branches: [ main ]
+
+    workflow_dispatch: # Enables the possibility to trigger the workflow manually
+
+jobs:
+    # first job builds the module
+    build:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@main
+            - name: Install and cache PowerShell modules
+              id: psmodulecache
+              uses: potatoqualitee/psmodulecache@v4.5
+              with:
+                modules-to-cache: Pester, PSSCriptAnalyzer, InvokeBuild, platyPS
+
+            - name: Import code signing certificate
+              shell: pwsh
+              run: |
+                $pfxCertFilePath = Join-Path -Path $PSScriptRoot -ChildPath "CodeSigningCertificate.pfx"
+                Set-Content -Value $([System.Convert]::FromBase64String($env:BASE64_PFX)) -Path $pfxCertFilePath -AsByteStream
+                $codeSigningCert = Import-PfxCertificate -FilePath $pfxCertFilePath -Password $($env:PFX_PASSWORD | ConvertTo-SecureString -AsPlainText -Force) -CertStoreLocation Cert:\CurrentUser\My
+              env:
+                BASE64_PFX: ${{ secrets.BASE64_PFX }}
+                PFX_PASSWORD: ${{ secrets.PFX_PASSWORD }}
+
+            - name: Invoke Build
+              shell: pwsh
+              run: pwsh -Command "Invoke-Build -file .\DynatracePS.build.ps1 -Configuration 'Release' -ExportAlias"
+
+            #- name: Push changes to Git Repository
+            #  run: |
+            #    git config --global user.name 'Joseph'
+            #    git config --global user.email 'joey.was@gmail.com'
+            #    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            #    git add .
+            #    git commit -am "Pushing Artifacts"
+            #    git push origin HEAD:main
+
+            - name: Sign PowerShell scripts
+              shell: pwsh
+              run: |
+                $scripts = Get-ChildItem -Path .\Output\ -Filter "*.psm1" -Recurse -ErrorAction Stop
+                $codeSigningCert = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert | Select-Object -First 1
+                foreach ($script in $scripts) {
+                  try {
+                    Write-Output "Signing script `"$($script.Name)`" with certificate `"$($codeSigningCert.Thumbprint)`""
+                    # sign script
+                    $null = Set-AuthenticodeSignature -Certificate $codeSigningCert -FilePath $script.FullName -TimestampServer "http://timestamp.comodoca.com/rfc3161"
+                  } catch {
+                    Write-Error $_
+                  }
+                }
+            - name: Upload Build Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: DynatracePS # naming the powershell module artifact
+                path: .\Output\ # saving the powershell module artifact to the path .Output/
+
+    publish-to-gallery:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v3
+        - name: Download build artifact
+          uses: aochmann/actions-download-artifact@1.0.4
+          with:
+            repo: ${{github.repository}}
+            name: DynatracePS
+            path: Artifact/
+        - name: Publish to gallery
+          shell: pwsh
+          env:
+            NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          run: |
+            $psmFileName = (Get-ChildItem Artifact/*.psm1 -Recurse).FullName
+            Import-Module $psmFileName -Verbose -Force
+            $ModuleFolder = Split-Path (Get-ChildItem Artifact/*.psd1 -Recurse)
+            if (Get-Module -Name 'DynatracePS') {
+              Publish-Module -Path $ModuleFolder -NuGetApiKey "$env:NUGET_KEY"
+            } else {
+              Write-Host "Unable to get module 'DynatracePS'"
+            }
