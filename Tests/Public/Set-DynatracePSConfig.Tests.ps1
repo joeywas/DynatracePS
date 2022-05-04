@@ -1,8 +1,6 @@
 Describe 'Set-DynatracePSConfig' {
 
     BeforeAll {
-        # Dot source import the function
-        . "$((Split-Path $PSScriptRoot) -replace 'Tests','')DynatracePS\Public\Set-DynatracePSConfig.ps1"
         $config = "$([Environment]::GetFolderPath('ApplicationData'))\DynatracePS\config.json"
         # If there is an existing config in this session, make a backup to restore it later
         if (Test-Path $config) {
@@ -13,9 +11,8 @@ Describe 'Set-DynatracePSConfig' {
     }
     
     It "Given valid parameters, creates config.json" {
-        #Set-DynatracePSConfig -EnvironmentID 'testing.live.dynatrace.com' -AccountUuid 'dynatrace-account-guid'
-        #$config | Should -Exist
-        $true | Should -Be $true
+        Set-DynatracePSConfig -EnvironmentID 'testing.live.dynatrace.com' -AccountUuid 'dynatrace-account-guid'
+        $config | Should -Exist
     }
 
     AfterAll {       

@@ -61,6 +61,10 @@ task Test {
             OutputFormat = 'NUnitXML'
         }
     }
+
+    $PathToPSM1 = ".\DynatracePS\DynatracePS.psm1"
+    Import-Module $PathToPsm1 -Force
+
     $Results = Invoke-Pester -Configuration $pesterConfig
     if($Results.FailedCount -gt 0){
         throw "$($Results.FailedCount) Tests failed"
@@ -111,12 +115,12 @@ task DebugBuild -if ($Configuration -eq "debug") {
     Write-Verbose -Message "Generating the Module Manifest for temp build and generating new Module File"
     try {
         Copy-Item -Path ".\DynatracePS\$($ModuleName).psd1" -Destination ".\Output\temp\$($ModuleName)\$ModuleVersion\"
-        $ExistingPSM1 = ".\DynatracePS\$($ModuleName).psm1"
-        if (Test-Path $ExistingPSM1) {
-            Copy-Item -Path $ExistingPSM1 -Destination ".\Output\temp\$($ModuleName)\$ModuleVersion\"
-        } else {
+        #$ExistingPSM1 = ".\DynatracePS\$($ModuleName).psm1"
+        #if (Test-Path $ExistingPSM1) {
+        #    Copy-Item -Path $ExistingPSM1 -Destination ".\Output\temp\$($ModuleName)\$ModuleVersion\"
+        #} else {
             New-Item -Path ".\Output\temp\$($ModuleName)\$ModuleVersion\$($ModuleName).psm1" -ItemType File
-        }
+        #}
     }
     catch {
         throw "Failed copying Module Manifest from: .\DynatracePS\$($ModuleName).psd1 to .\Output\temp\$($ModuleName)\$ModuleVersion\ or Generating the new psm file."
