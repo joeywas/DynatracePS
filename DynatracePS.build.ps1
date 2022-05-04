@@ -42,8 +42,8 @@ task Test {
     try {
         Write-Verbose -Message "Running PSScriptAnalyzer on Public functions"
         Invoke-ScriptAnalyzer ".\DynatracePS\Public" -Recurse
-        #Write-Verbose -Message "Running PSScriptAnalyzer on Private functions"
-        #Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
+        Write-Verbose -Message "Running PSScriptAnalyzer on Private functions"
+        Invoke-ScriptAnalyzer ".\DynatracePS\Private" -Recurse
     }
     catch {
         Write-Warning "Couldn't run Script Analyzer"
@@ -61,6 +61,10 @@ task Test {
             OutputFormat = 'NUnitXML'
         }
     }
+
+    $PathToPSM1 = ".\DynatracePS\DynatracePS.psm1"
+    Import-Module $PathToPsm1 -Force
+
     $Results = Invoke-Pester -Configuration $pesterConfig
     if($Results.FailedCount -gt 0){
         throw "$($Results.FailedCount) Tests failed"
@@ -111,12 +115,12 @@ task DebugBuild -if ($Configuration -eq "debug") {
     Write-Verbose -Message "Generating the Module Manifest for temp build and generating new Module File"
     try {
         Copy-Item -Path ".\DynatracePS\$($ModuleName).psd1" -Destination ".\Output\temp\$($ModuleName)\$ModuleVersion\"
-        $ExistingPSM1 = ".\DynatracePS\$($ModuleName).psm1"
-        if (Test-Path $ExistingPSM1) {
-            Copy-Item -Path $ExistingPSM1 -Destination ".\Output\temp\$($ModuleName)\$ModuleVersion\"
-        } else {
+        #$ExistingPSM1 = ".\DynatracePS\$($ModuleName).psm1"
+        #if (Test-Path $ExistingPSM1) {
+        #    Copy-Item -Path $ExistingPSM1 -Destination ".\Output\temp\$($ModuleName)\$ModuleVersion\"
+        #} else {
             New-Item -Path ".\Output\temp\$($ModuleName)\$ModuleVersion\$($ModuleName).psm1" -ItemType File
-        }
+        #}
     }
     catch {
         throw "Failed copying Module Manifest from: .\DynatracePS\$($ModuleName).psd1 to .\Output\temp\$($ModuleName)\$ModuleVersion\ or Generating the new psm file."
@@ -154,7 +158,7 @@ task DebugBuild -if ($Configuration -eq "debug") {
                 foreach($s in $mylist){
                     if($s -match "Alias"){
                         # This assumes aliases are defined like so in functions
-                        # [Alias('Get-IvantiAsset')]
+                        # [Alias('Get-SomethingAlias')]
                         $alias = (($s.split(":")[3]).split("('")[1]).split("')")[0]
                         Write-Verbose -Message "Exporting Alias: $($alias) to Function: $($function)"
                         Add-Content -Path $ModuleFile -Value "Export-ModuleMember -Function $(($function.split('.')[0]).ToString()) -Alias $alias"
@@ -274,7 +278,7 @@ task Build -if($Configuration -eq "Release"){
                 foreach($s in $mylist){
                     if($s -match "Alias"){
                         # This assumes aliases are defined like so
-                        # [Alias('Get-IvantiAsset')]
+                        # [Alias('Get-SomethingAlias')]
                         $alias = (($s.split(":")[3]).split("('")[1]).split("')")[0]
                         Write-Verbose -Message "Exporting Alias: $($alias) to Function: $($function)"
                         Add-Content -Path $ModuleFile -Value "Export-ModuleMember -Function $(($function.split('.')[0]).ToString()) -Alias $alias"

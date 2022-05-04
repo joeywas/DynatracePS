@@ -1,8 +1,6 @@
 Describe 'Set-DynatracePSConfig' {
 
     BeforeAll {
-        # Dot source import the function
-        . "$((Split-Path $PSScriptRoot) -replace 'Tests','')DynatracePS\Public\Set-DynatracePSConfig.ps1"
         $config = "$([Environment]::GetFolderPath('ApplicationData'))\DynatracePS\config.json"
         # If there is an existing config in this session, make a backup to restore it later
         if (Test-Path $config) {
