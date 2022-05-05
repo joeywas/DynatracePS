@@ -1,57 +1,124 @@
 function Invoke-DynatraceAPIMethod {
-    <#
-        .SYNOPSIS
-            Invoke a method on in the Dynatrace API. This is a service function to be called by other functions.
+<#
+.SYNOPSIS
+    Invoke a method in the Dynatrace API. This is a service function to be called by other functions.
 
-        .DESCRIPTION
-            Invoke a method on in the Dynatrace API. This is a service function to be called by other functions.
+.DESCRIPTION
+    Invoke a method in the Dynatrace API. This is a service function to be called by other functions.
 
-        .PARAMETER RestPath
-            The rest path to append to the base url
+.PARAMETER Uri
+    Uri to use for Invoke-RestMethod
 
-        .EXAMPLE
-            Invoke-DynatraceAPIMethod -RestPath '/eventTypes'
+.PARAMETER Method
+    Defaults to GET
 
-        .NOTES
-            https://api.dynatrace.com/spec/#/
+.PARAMETER Headers
+    Headers to use. Will be joined with authorization header.
 
-        #>
+.PARAMETER GetParameter
+    Get parameters to include
 
-        [CmdletBinding()]
-        param(
-            [Parameter(Mandatory)]
-            [String]$RestPath,
-            [Microsoft.PowerShell.Commands.WebRequestMethod]$Method = 'GET'
-        )
+.PARAMETER RestResponseProperty
+    Property of the rest response to return as results.
 
-        begin {
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
-            Write-Debug "[$($MyInvocation.MyCommand.Name)] Function started"
+.PARAMETER LevelOfRecursion
+    Internal parameter used to help determine how far into the matrix we are
 
-            $config = Get-DynatracePSConfig
-            $access_token = $config.accesstoken
-            $headers = @{
-                Authorization = "Api-Token $access_token"
-            }
+.EXAMPLE
+    Invoke-DynatraceAPIMethod -Uri https://environmentid.live.dynatrace.com/api/v2/entityTypes -RestResponseProperty types
 
-            $Uri = "https://$($config.EnvironmentID).live.dynatrace.com/api/v2$RestPath"
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] $Uri"
+.NOTES
+    https://api.dynatrace.com/spec/#/
+    
+#>
+
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [Uri]$Uri,
+        [Microsoft.PowerShell.Commands.WebRequestMethod]$Method = 'GET',
+        [Hashtable]$Headers,
+        [Hashtable]$GetParameter = @{},
+        [string]$RestResponseProperty,
+        [int]$LevelOfRecursion = 1
+    )
+
+    begin {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Function started"
+        Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Function started. PSBoundParameters: $($PSBoundParameters | Out-String)"
+
+#region AuthHeaders
+        $config = Get-DynatracePSConfig
+        $access_token = $config.accesstoken
+
+        if (-not $access_token) {
+            Write-Warning "[$($MyInvocation.MyCommand.Name) $Level] Must first configure an access token with Set-DynatracePSConfig -AccessToken <token>. Exiting..."
+            break
         }
 
-        process {
-            try {
-                Invoke-RestMethod -Uri $Uri -Method $Method -Headers $headers
-            } catch {
-                Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with Invoke-RestMethod $uri"
-                $_
-                break
-            }
+        $_headers = @{
+            Authorization = "Api-Token $access_token"
         }
-        end {
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
-            Write-Debug "[$($MyInvocation.MyCommand.Name)] Complete"
+#endregion AuthHeaders
+
+        $uriQuery = ConvertTo-ParameterHash -Uri $Uri
+
+        $internalGetParameter = Join-Hashtable $uriQuery, $GetParameter
+        [Uri]$LeftPartOfURI = $Uri.GetLeftPart('Path')
+        [Uri]$FinalURI = "{0}{1}" -f $LeftPartOfURI,(ConvertTo-GetParameter $internalGetParameter)
+
+        Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] FinalURI: [$FinalUri]"
+
+        try {
+            $RestResponse = Invoke-RestMethod -Uri $FinalURI -Method $Method -Headers $_headers
+        } catch {
+            Write-Warning "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Problem with Invoke-RestMethod $uri"
+            $_
+            break
         }
+        Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Executed RestMethod"
+
+        Test-ServerResponse -InputObject $RestResponse
     }
 
+    process {
+        if ($RestResponse) {
+            Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] nextPageKey: $($RestResponse.nextPageKey)"
 
+            $NextPageKey = $RestResponse.nextPageKey
 
+            if ($RestResponseProperty) {
+                $result = ($RestResponse).$RestResponseProperty
+            } else {
+                $result = $RestResponse
+            }
+
+            if (-not $PSBoundParameters["GetParameter"]) {
+                $PSBoundParameters["GetParameter"] = $internalGetParameter
+            }
+
+            do {
+                
+                if (-not $NextPageKey) {
+                    # if there is no page key, then quit
+                    break
+                } else {
+                    # Output results from this loop
+                    $result
+                }
+                
+                $PSBoundParameters["GetParameter"]['nextPageKey'] = $NextPageKey
+                $PSBoundParameters["LevelOfRecursion"] = $LevelOfRecursion + 1
+
+                Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Calling Invoke-DynatraceApiMethod"
+                $result = Invoke-DynatraceApiMethod @PSBoundParameters
+            } while (-not $NextPageKey)
+
+            $result
+        }
+    }
+    end {
+        Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
+        Write-Debug "[$($MyInvocation.MyCommand.Name)] Complete"
+    }
+}

@@ -12,7 +12,7 @@
 RootModule = 'DynatracePS.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.2'
+ModuleVersion = '0.1.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -71,12 +71,18 @@ PowerShellVersion = '3.0'
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-DynatracePSConfig', 'Set-DynatracePSConfig', 
                'Connect-DynatraceAccountManagement', 
-               'Invoke-DynatraceAccountManagementAPIMethod', 'Get-DynatraceUser', 
+               'Invoke-DynatraceAccountManagementAPIMethod','Get-DynatraceUser', 
                'Get-DynatraceUserGroup', 'Get-DynatraceGroup', 
                'Get-DynatraceGroupUser', 'Get-DynatraceGroupPermission', 
                'Get-DynatraceEnvironment', 'Get-DynatracePermission', 
                'Get-DynatraceQuota', 'Get-DynatraceEffectivePermission', 
-               'Get-DynatraceSubscription', 'Invoke-DynatraceAPIMethod'
+               'Get-DynatraceSubscription', 'Invoke-DynatraceAPIMethod',
+               'Get-DynatraceManagementZone',
+               'Get-DynatraceEntityType','Get-DynatraceEntity','Get-DynatraceEntityProperty',
+               'Get-DynatraceHost','Get-DynatraceHostGroup',
+               'Get-DynatraceProcessGroup','Get-DynatraceProcessGroupInstance',
+               'Get-DynatraceContainer',
+               'Get-DynatraceSettingsSchema'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
