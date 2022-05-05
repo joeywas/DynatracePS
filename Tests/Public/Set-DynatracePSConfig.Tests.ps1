@@ -7,6 +7,8 @@ Describe 'Set-DynatracePSConfig' {
             Write-Verbose "Backing up original config"
             $configBackup = "$config.backup"
             Move-Item $config $configBackup -Force
+        } else {
+            $configBackup = ''
         }
     }
     
