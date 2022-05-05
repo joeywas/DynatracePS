@@ -1,10 +1,10 @@
 function Connect-DynatraceAccountManagement {
 <#
     .SYNOPSIS
-        Connect to the Dynatrace Account Management API for SaaS
+        Connect to the Dynatrace Account Management API for SaaS. internal use
 
     .DESCRIPTION
-        Connect to the Dynatrace Account Management API for SaaS
+        Connect to the Dynatrace Account Management API for SaaS. internal use
 
     .PARAMETER OauthClientSecret
         Client secret generated from the Manage account API OAuth Clients page
