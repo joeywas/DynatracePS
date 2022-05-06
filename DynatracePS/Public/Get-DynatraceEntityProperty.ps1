@@ -9,6 +9,9 @@ function Get-DynatraceEntityProperty {
     .PARAMETER entityID
         The entity ID
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+
     .EXAMPLE
         Get-DynatraceEntityProperty -entityID HOST-9FADEDA85A24F460
 
@@ -19,7 +22,8 @@ function Get-DynatraceEntityProperty {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [String]$entityID
+        [String]$entityID,
+        [switch]$OutputAsJson
     )
 
     begin {
@@ -37,7 +41,13 @@ function Get-DynatraceEntityProperty {
         $splatParameters = @{
             Uri = $uri
         }
-        Invoke-DynatraceAPIMethod @splatParameters
+        $output = Invoke-DynatraceAPIMethod @splatParameters
+
+        if ($OutputAsJson) {
+            $output | ConvertTo-Json -Depth 5
+        } else {
+            $output
+        }
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

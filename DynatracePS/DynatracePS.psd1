@@ -12,7 +12,7 @@
 RootModule = 'DynatracePS.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.2'
+ModuleVersion = '0.1.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -77,9 +77,10 @@ FunctionsToExport = 'Get-DynatracePSConfig', 'Set-DynatracePSConfig',
                'Get-DynatraceEnvironment', 'Get-DynatracePermission', 
                'Get-DynatraceQuota', 'Get-DynatraceEffectivePermission', 
                'Get-DynatraceSubscription', 'Invoke-DynatraceAPIMethod',
-               'Get-DynatraceManagementZone',
+               'Get-DynatraceManagementZone','Get-DynatraceManagementZoneProperty',
                'Get-DynatraceEntityType','Get-DynatraceEntity','Get-DynatraceEntityProperty',
-               'Get-DynatraceHost','Get-DynatraceHostGroup',
+               'Get-DynatraceHost','Get-DynatraceHostProperty',
+               'Get-DynatraceHostGroup','Get-DynatraceHostGroupProperty',
                'Get-DynatraceProcessGroup','Get-DynatraceProcessGroupInstance',
                'Get-DynatraceContainer',
                'Get-DynatraceSettingsSchema'
