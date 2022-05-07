@@ -6,6 +6,9 @@ function Get-DynatraceUserGroup {
     .DESCRIPTION
         List the groups for a user
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+
     .EXAMPLE
         Get-DynatraceUserGroup -Email name@domain.com
 
@@ -17,7 +20,8 @@ function Get-DynatraceUserGroup {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [String]$Email
+        [String]$Email,
+        [switch]$OutputAsJson
     )
 
     begin {
@@ -31,12 +35,15 @@ function Get-DynatraceUserGroup {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
-        $return
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

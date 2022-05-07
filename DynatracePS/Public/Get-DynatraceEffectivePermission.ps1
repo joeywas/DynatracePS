@@ -18,6 +18,9 @@ function Get-DynatraceEffectivePermission {
     .PARAMETER entityId
         The entity id
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceEffectivePermission -levelType account -levelID <accountUuid>
 
@@ -37,7 +40,8 @@ function Get-DynatraceEffectivePermission {
         [String]$levelID,
         [String]$entityType,
         [String]$entityId,
-        [switch]$explain
+        [switch]$explain,
+        [switch]$OutputAsJson
     )
 
     begin {
@@ -53,12 +57,15 @@ function Get-DynatraceEffectivePermission {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $Path
+            $splatParameters = @{
+                RestPath =$path
+                OutputAsJson = $OutputAsJson
+            }
+            Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
-        $return
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

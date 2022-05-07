@@ -6,6 +6,9 @@ function Get-DynatraceUser {
     .DESCRIPTION
         List the users of a Dynatrace account
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceUser
 
@@ -15,7 +18,9 @@ function Get-DynatraceUser {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -28,13 +33,21 @@ function Get-DynatraceUser {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            $return = Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Count of results: $($return.count)"
-        $return.items
+        if ($OutputAsJson) {
+            $return
+        } else {
+            $return.items
+        }
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

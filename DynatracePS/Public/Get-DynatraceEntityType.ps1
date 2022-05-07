@@ -6,6 +6,9 @@ function Get-DynatraceEntityType {
     .DESCRIPTION
         Get list of entity types in Dynatrace environment
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+
     .EXAMPLE
         Get-DynatraceEntityType
 
@@ -14,7 +17,9 @@ function Get-DynatraceEntityType {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -36,7 +41,13 @@ function Get-DynatraceEntityType {
             GetParameter = $GetParameter
             RestResponseProperty = 'types'
         }
-        Invoke-DynatraceAPIMethod @splatParameters
+        $output = Invoke-DynatraceAPIMethod @splatParameters
+        if ($OutputAsJson) {
+            $output | ConvertTo-Json -Depth 6
+        } else {
+            $output
+        }
+
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

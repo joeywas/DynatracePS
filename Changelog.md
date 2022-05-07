@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -Function Get-DynatraceHost cleaned up
 -Function Get-DynatraceProcessGroup calls correct function now
 -Function Get-DynatraceProcessGroupInstance renamed to Get-DynatraceProcess to better reflect what it does
+-All functions that should OutputAsJson now do.
 ### Fixed
 -Function Get-DynatraceHostGroup works with -Name parm now
 -Function Get-DynatraceHostProperty works with -Name parm now

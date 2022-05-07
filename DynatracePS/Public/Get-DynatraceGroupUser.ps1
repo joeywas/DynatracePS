@@ -12,6 +12,9 @@ function Get-DynatraceGroupUser {
     .PARAMETER GroupName
         The Name of the group
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceGroupUser -groupUuid e5e9b12d-daf8-40d0-a6b5-7094667dd142
 
@@ -28,7 +31,8 @@ function Get-DynatraceGroupUser {
         [Parameter(Mandatory,ParameterSetName = 'Uuid')]
         [String]$groupUuid,
         [Parameter(Mandatory,ParameterSetName = 'Name')]
-        [String]$GroupName
+        [String]$GroupName,
+        [switch]$OutputAsJson
     )
 
     begin {
@@ -46,13 +50,21 @@ function Get-DynatraceGroupUser {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            $return = Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Count of results: $($return.count)"
-        $return.items
+        if ($OutputAsJson) {
+            $return
+        } else {
+            $return.items
+        }
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

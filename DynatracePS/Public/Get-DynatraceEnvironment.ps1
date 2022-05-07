@@ -6,6 +6,9 @@ function Get-DynatraceEnvironment {
     .DESCRIPTION
         Lists all environments and management zones of a Dynatrace account
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceEnvironment
 
@@ -14,7 +17,9 @@ function Get-DynatraceEnvironment {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -27,12 +32,15 @@ function Get-DynatraceEnvironment {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
-        $return
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

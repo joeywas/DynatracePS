@@ -6,6 +6,9 @@ function Get-DynatracePermission {
     .DESCRIPTION
         Lists all available permissions
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string    
+
     .EXAMPLE
         Get-DynatracePermission
 
@@ -14,7 +17,9 @@ function Get-DynatracePermission {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -26,12 +31,15 @@ function Get-DynatracePermission {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
-        $return
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

@@ -21,7 +21,8 @@ function Invoke-DynatraceAccountManagementAPIMethod {
         param(
             [Parameter(Mandatory)]
             [String]$RestPath,
-            [Microsoft.PowerShell.Commands.WebRequestMethod]$Method = 'GET'
+            [Microsoft.PowerShell.Commands.WebRequestMethod]$Method = 'GET',
+            [switch]$OutputAsJson
         )
 
         begin {
@@ -39,11 +40,16 @@ function Invoke-DynatraceAccountManagementAPIMethod {
 
         process {
             try {
-                Invoke-RestMethod -Uri $Uri -Method $Method -Headers $headers
+                $output = Invoke-RestMethod -Uri $Uri -Method $Method -Headers $headers
             } catch {
                 Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with Invoke-RestMethod $uri"
                 $_
                 break
+            }
+            if ($OutputAsJson) {
+                $output | ConvertTo-Json -Depth 6
+            } else {
+                $output
             }
         }
         end {
