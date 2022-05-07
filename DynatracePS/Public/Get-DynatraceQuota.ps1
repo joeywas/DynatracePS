@@ -6,6 +6,9 @@ function Get-DynatraceQuota {
     .DESCRIPTION
         Gets the host units quota of a Dynatrace account
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceQuote
 
@@ -14,7 +17,9 @@ function Get-DynatraceQuota {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -27,12 +32,15 @@ function Get-DynatraceQuota {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
-        $return
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

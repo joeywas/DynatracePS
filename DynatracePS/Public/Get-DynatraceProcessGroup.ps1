@@ -10,7 +10,8 @@ function Get-DynatraceProcessGroup {
         Get-DynatraceProcessGroup
 
     .NOTES
-        https://api.dynatrace.com/spec/#/
+        https://www.dynatrace.com/support/help/how-to-use-dynatrace/process-groups
+
 #>
 
     [CmdletBinding()]
@@ -19,26 +20,10 @@ function Get-DynatraceProcessGroup {
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Function started"
-
-        $EnvironmentID = (Get-DynatracePSConfig).EnvironmentID
-
-        $uri = "https://$EnvironmentID.live.dynatrace.com/api/v2/entities"
-
-        $GetParameter = @{
-            entitySelector = 'type("PROCESS_GROUP")'
-            pageSize = 500
-        }
-
-        Write-Verbose "[$($MyInvocation.MyCommand.Name)] $Uri"
     }
 
     process {
-        $splatParameters = @{
-            Uri = $uri
-            GetParameter = $GetParameter
-            RestResponseProperty = 'entities'
-        }
-        Invoke-DynatraceAPIMethod @splatParameters
+        Get-DynatraceEntity -Type 'PROCESS_GROUP'
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

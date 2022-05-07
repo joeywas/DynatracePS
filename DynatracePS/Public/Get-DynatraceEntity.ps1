@@ -9,6 +9,9 @@ function Get-DynatraceEntity {
     .PARAMETER Type
         The type of entity to get
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+
     .EXAMPLE
         Get-DynatraceEntity -Type HOST_GROUP
 
@@ -19,7 +22,8 @@ function Get-DynatraceEntity {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [String]$Type
+        [String]$Type,
+        [Switch]$outputAsJson
     )
 
     begin {
@@ -44,7 +48,12 @@ function Get-DynatraceEntity {
             GetParameter = $GetParameter
             RestResponseProperty = 'entities'
         }
-        Invoke-DynatraceAPIMethod @splatParameters
+        $output = Invoke-DynatraceAPIMethod @splatParameters
+        if ($OutputAsJson) {
+            $output | ConvertTo-Json -Depth 6
+        } else {
+            $output
+        }
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

@@ -6,6 +6,9 @@ function Get-DynatraceSubscription {
     .DESCRIPTION
         Lists all Dynatrace platform subscriptions of an account
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceSubscription
 
@@ -14,7 +17,9 @@ function Get-DynatraceSubscription {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -27,13 +32,21 @@ function Get-DynatraceSubscription {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            $return = Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Count of results: $($return.totalCount)"
-        $return.records
+        if ($OutputAsJson) {
+            $return | ConvertTo-Json -Depth 6
+        } else {
+            $return.records
+        }
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

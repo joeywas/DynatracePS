@@ -44,7 +44,7 @@ function Get-DynatraceEntityProperty {
         $output = Invoke-DynatraceAPIMethod @splatParameters
 
         if ($OutputAsJson) {
-            $output | ConvertTo-Json -Depth 5
+            $output | ConvertTo-Json -Depth 6
         } else {
             $output
         }

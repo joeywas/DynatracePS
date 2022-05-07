@@ -1,25 +1,29 @@
-function Get-DynatraceHostGroupProperty {
+function Get-DynatraceProcessProperty {
 <#
     .SYNOPSIS
-        Get properties for a host group
+        Get a process's properties from Dynatrace environment
 
     .DESCRIPTION
-        Get properties for a host group
+        Get a process's properties from Dynatrace environment
 
     .PARAMETER Id
-        Unique id of the host group
+        Unique id of the process
 
     .PARAMETER Name
-        Name of the host group
+        Name of the process
 
     .PARAMETER OutputAsJson
         Output the properties as a JSON string
 
     .EXAMPLE
-        Get-DynatraceHostGroupProperty -id hostgroupid
+        Get-DynatraceProcessProperty -Id <process-id>
+
+    .EXAMPLE
+        Get-DynatraceProcessProperty -Name <process-name> -OutputAsJson
 
     .NOTES
         https://www.dynatrace.com/support/help/dynatrace-api/environment-api/entity-v2/get-entity
+
 #>
 
     [CmdletBinding()]
@@ -36,16 +40,20 @@ function Get-DynatraceHostGroupProperty {
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Function started"
 
         if ($Name) {
-            $Id = (Get-DynatraceHostGroup | Where-Object {$_.displayName -eq $Name}).entityID
+            $entityIds = (Get-DynatraceProcess | Where-Object {$_.displayName -eq $Name}).entityID
+        } else {
+            $entityIds = $Id
         }
     }
 
     process {
-        $splatParm = @{
-            entityID = $Id
-            OutputAsJson = $OutputAsJson
+        foreach ($entityId in $entityIDs) {
+            $splatParm = @{
+                entityID = $entityId
+                OutputAsJson = $OutputAsJson
+            }
+            Get-DynatraceEntityProperty @splatParm
         }
-        Get-DynatraceEntityProperty @splatParm
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

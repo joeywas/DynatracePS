@@ -16,7 +16,7 @@ function Get-DynatraceHostProperty {
         Output the properties as a JSON string
 
     .EXAMPLE
-        Get-DynatraceHostProperty -id hostgroupid
+        Get-DynatraceHostProperty -id hostid
 
     .EXAMPLE
         Get-DynatraceHostProperty -Name hostname -OutputAsJson
@@ -39,7 +39,8 @@ function Get-DynatraceHostProperty {
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Function started"
 
         if ($Name) {
-            $Id = (Get-DynatraceHost | Where-Object {$_.Name -eq $Name}).id
+            $Id = (Get-DynatraceHost | Where-Object {$_.displayName -eq $Name}).entityId
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Got $Name entityID value of $Id"
         }
     }
 

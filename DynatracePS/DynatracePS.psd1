@@ -12,7 +12,7 @@
 RootModule = 'DynatracePS.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.4'
+ModuleVersion = '0.1.5'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -71,17 +71,19 @@ PowerShellVersion = '3.0'
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Get-DynatracePSConfig', 'Set-DynatracePSConfig', 
                'Connect-DynatraceAccountManagement', 
-               'Invoke-DynatraceAccountManagementAPIMethod','Get-DynatraceUser', 
+               'Get-DynatraceUser', 
                'Get-DynatraceUserGroup', 'Get-DynatraceGroup', 
                'Get-DynatraceGroupUser', 'Get-DynatraceGroupPermission', 
                'Get-DynatraceEnvironment', 'Get-DynatracePermission', 
                'Get-DynatraceQuota', 'Get-DynatraceEffectivePermission', 
-               'Get-DynatraceSubscription', 'Invoke-DynatraceAPIMethod',
+               'Get-DynatraceSubscription',
                'Get-DynatraceManagementZone','Get-DynatraceManagementZoneProperty',
-               'Get-DynatraceEntityType','Get-DynatraceEntity','Get-DynatraceEntityProperty',
+               'Get-DynatraceEntityType',
+               'Get-DynatraceEntity','Get-DynatraceEntityProperty',
                'Get-DynatraceHost','Get-DynatraceHostProperty',
                'Get-DynatraceHostGroup','Get-DynatraceHostGroupProperty',
-               'Get-DynatraceProcessGroup','Get-DynatraceProcessGroupInstance',
+               'Get-DynatraceProcessGroup','Get-DynatraceProcessGroupProperty',
+               'Get-DynatraceProcess','Get-DynatraceProcessProperty',
                'Get-DynatraceContainer',
                'Get-DynatraceSettingsSchema'
 

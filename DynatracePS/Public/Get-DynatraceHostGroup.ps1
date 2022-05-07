@@ -10,7 +10,7 @@ function Get-DynatraceHostGroup {
         Get-DynatraceHostGroup
 
     .NOTES
-        https://api.dynatrace.com/spec/#/
+        https://www.dynatrace.com/support/help/dynatrace-api/environment-api/entity-v2
 #>
 
     [CmdletBinding()]

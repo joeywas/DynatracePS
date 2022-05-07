@@ -6,6 +6,9 @@ function Get-DynatraceGroup {
     .DESCRIPTION
         List the groups on a Dynatrace account
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceGroup
 
@@ -14,7 +17,9 @@ function Get-DynatraceGroup {
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -27,13 +32,21 @@ function Get-DynatraceGroup {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            $return = Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Count of results: $($return.count)"
-        $return.items
+        if ($OutputAsJson) {
+            $return
+        } else {
+            $return.items
+        }
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

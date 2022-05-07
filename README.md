@@ -23,3 +23,42 @@ Set-DynatracePSConfig -EnvironmentID 'environmentid' `
     -AccessToken 'accesstoken
 ```
 
+## Why not try getting a user list?
+```
+Get-DynatraceUser
+```
+
+## Account Management Functions
+
+These functions require an accountUuid and OAuthClientSecret be configured with `Set-DynatracePSConfig`
+
+- Get-DynatraceUser
+- Get-DynatraceUserGroup
+- Get-DynatraceGroup
+- Get-DynatraceGroupUser
+- Get-DynatraceGroupPermission
+- Get-DynatraceEnvironment
+- Get-DynatracePermission
+- Get-DynatraceQuota
+- Get-DynatraceEffectivePermission
+- Get-DynatraceSubscription
+
+## Environment Functions
+
+These functions require an environmentID and AccessToken be configured with `Set-DynatracePSConfig`
+
+- Get-DynatraceContainer
+- Get-DynatraceEntity
+- Get-DynatraceEntityProperty
+- Get-DynatraceEntityType
+- Get-DynatraceHost
+- Get-DynatraceHostGroup
+- Get-DynatraceHostGroupProperty
+- Get-DynatraceHostProperty
+- Get-DynatraceManagementZone
+- Get-DynatraceManagementZoneProperty
+- Get-DynatraceProcess
+- Get-DynatraceProcessGroup
+- Get-DynatraceProcessGroupProperty
+- Get-DynatraceProcessProperty
+- Get-DynatraceSettingsSchema

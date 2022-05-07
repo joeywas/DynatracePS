@@ -12,6 +12,9 @@ function Get-DynatraceGroupPermission {
     .PARAMETER GroupName
         The name of a group
 
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
+        
     .EXAMPLE
         Get-DynatraceGroupPermission -groupUuid e5e9b12d-daf8-40d0-a6b5-7094667dd142
 
@@ -28,7 +31,8 @@ function Get-DynatraceGroupPermission {
         [Parameter(Mandatory,ParameterSetName = 'Uuid')]
         [String]$groupUuid,
         [Parameter(Mandatory,ParameterSetName = 'Name')]
-        [String]$GroupName
+        [String]$GroupName,
+        [switch]$OutputAsJson
     )
 
     begin {
@@ -46,12 +50,15 @@ function Get-DynatraceGroupPermission {
 
     process {
         try {
-            $return = Invoke-DynatraceAccountManagementAPIMethod -RestPath $RestPath
+            $splatParameters = @{
+                RestPath =$RestPath
+                OutputAsJson = $OutputAsJson
+            }
+            Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
             break
         }
-        $return
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
