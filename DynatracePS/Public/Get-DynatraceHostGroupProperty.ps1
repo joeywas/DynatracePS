@@ -36,7 +36,7 @@ function Get-DynatraceHostGroupProperty {
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Function started"
 
         if ($Name) {
-            $Id = (Get-DynatraceHostGroup | Where-Object {$_.Name -eq $Name}).id
+            $Id = (Get-DynatraceHostGroup | Where-Object {$_.displayName -eq $Name}).entityID
         }
     }
 
