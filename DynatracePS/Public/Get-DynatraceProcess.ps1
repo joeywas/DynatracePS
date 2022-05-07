@@ -1,13 +1,13 @@
-function Get-DynatraceHost {
+function Get-DynatraceProcess {
 <#
     .SYNOPSIS
-        Gets hosts in Dynatrace environment
+        Get list of monitored processes from Dynatrace environment
 
     .DESCRIPTION
-        Gets hosts in Dynatrace environment
+        Get list of monitored processes from Dynatrace environment
 
     .EXAMPLE
-        Get-DynatraceHost
+        Get-DynatraceProcess
 
     .NOTES
         https://www.dynatrace.com/support/help/dynatrace-api/environment-api/entity-v2
@@ -22,7 +22,7 @@ function Get-DynatraceHost {
     }
 
     process {
-        Get-DynatraceEntity -Type 'HOST'
+        Get-DynatraceEntity -Type 'PROCESS_GROUP_INSTANCE'
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"

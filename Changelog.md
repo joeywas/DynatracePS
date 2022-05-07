@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2022-05-07
+### Added
+-Function Get-DynatraceProcessGroupProperty to return properties for a process group
+-Function Get-DynatraceProcessProperty to return properties for a process
+### Modified
+-Function Get-DynatraceHost cleaned up
+-Function Get-DynatraceProcessGroup calls correct function now
+-Function Get-DynatraceProcessGroupInstance renamed to Get-DynatraceProcess to better reflect what it does
+### Fixed
+-Function Get-DynatraceHostGroup works with -Name parm now
+-Function Get-DynatraceHostProperty works with -Name parm now
 
 ## [0.1.4] - 2022-05-06
 ### Added
