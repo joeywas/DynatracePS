@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2022-05-09
+### Added
+-Function Rename-DynatraceManagementZone to rename management zones
+
 ## [0.1.5] - 2022-05-07
 ### Added
 -Function Get-DynatraceProcessGroupProperty to return properties for a process group

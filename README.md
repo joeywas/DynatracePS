@@ -62,3 +62,4 @@ These functions require an environmentID and AccessToken be configured with `Set
 - Get-DynatraceProcessGroupProperty
 - Get-DynatraceProcessProperty
 - Get-DynatraceSettingsSchema
+- Rename-DynatraceManagementZone

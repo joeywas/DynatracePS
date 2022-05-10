@@ -18,7 +18,10 @@ function Test-ServerResponse {
     }
 
     process {
-        if ($InputObject.Code -gt 200) {
+        if ($InputObject.Code -eq 204) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Response code 204: Valid payload"
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Response code 204: Valid payload"
+        } elseif ($InputObject.Code -gt 200) {
             Write-Debug "[$($MyInvocation.MyCommand.Name)] Error code found, throwing error"
             throw ("{0}: {1}" -f $InputObject.Code,($InputObject.message -join ','))
         }
