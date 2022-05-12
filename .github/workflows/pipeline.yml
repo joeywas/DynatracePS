@@ -80,7 +80,7 @@ jobs:
             Import-Module $psmFileName -Verbose -Force
             $ModuleFolder = Split-Path (Get-ChildItem Artifact/*.psd1 -Recurse)
             if (Get-Module -Name 'DynatracePS') {
-              Publish-Module -Path $ModuleFolder -NuGetApiKey "$env:NUGET_KEY"
+              Publish-Module -Path $ModuleFolder -NuGetApiKey "$env:NUGET_KEY" -Verbose
             } else {
               Write-Host "Unable to get module 'DynatracePS'"
             }

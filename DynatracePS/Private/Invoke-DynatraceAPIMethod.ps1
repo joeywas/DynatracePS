@@ -40,6 +40,8 @@ function Invoke-DynatraceAPIMethod {
         [Hashtable]$Headers,
         [Hashtable]$GetParameter = @{},
         [string]$RestResponseProperty,
+        [System.Object]$Body,
+        [string]$ContentType,
         [int]$LevelOfRecursion = 1
     )
 
@@ -70,7 +72,22 @@ function Invoke-DynatraceAPIMethod {
         Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] FinalURI: [$FinalUri]"
 
         try {
-            $RestResponse = Invoke-RestMethod -Uri $FinalURI -Method $Method -Headers $_headers
+            $splatParameters = @{
+                Uri = $FinalURI
+                Method = $Method
+                Headers = $_headers
+            }
+            if ($body) {
+                $splatParameters += @{
+                    Body = $body
+                }
+            }
+            if ($ContentType) {
+                $splatParameters += @{
+                    ContentType = $ContentType
+                }
+            }
+            $RestResponse = Invoke-RestMethod @splatParameters
         } catch {
             Write-Warning "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Problem with Invoke-RestMethod $uri"
             $_
