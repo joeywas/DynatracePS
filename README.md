@@ -1,6 +1,8 @@
 # DynatracePS
 PowerShell module to interact with Dynatrace SaaS APIs
 
+[![Dev Branch](https://github.com/joeywas/DynatracePS/actions/workflows/pipeline.yml/badge.svg?branch=dev)](https://github.com/joeywas/DynatracePS/actions/workflows/pipeline.yml)
+
 ## Getting Started
 
 Install the DynatracePS module from PSGallery for the current user
