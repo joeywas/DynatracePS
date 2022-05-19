@@ -83,6 +83,3 @@ function Rename-DynatraceManagementZone {
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Complete"
     }
 }
-
-
-
