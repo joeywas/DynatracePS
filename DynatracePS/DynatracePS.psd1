@@ -12,7 +12,7 @@
 RootModule = 'DynatracePS.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.6'
+ModuleVersion = '0.1.7'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -86,6 +86,7 @@ FunctionsToExport = 'Get-DynatracePSConfig', 'Set-DynatracePSConfig',
                'Get-DynatraceProcess','Get-DynatraceProcessProperty',
                'Get-DynatraceContainer',
                'Get-DynatraceSettingsSchema',
+               'Get-DynatraceTag',
                'Rename-DynatraceManagementZone'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
