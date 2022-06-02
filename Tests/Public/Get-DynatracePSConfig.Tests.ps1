@@ -1,4 +1,4 @@
-Describe 'Set-DynatracePSConfig' {
+Describe 'Get-DynatracePSConfig' {
 
     BeforeAll {
         $EnvironmentID = 'testtenant'
@@ -17,17 +17,15 @@ Describe 'Set-DynatracePSConfig' {
     }
     
     It "Given valid parameters, creates config.json" {
-        $splatParm = @{
-            EnvironmentID = $EnvironmentID
-            AccountUuid = $AccountUuid
-            OAuthClientSecret = $OAuthClientSecret
-            AccessToken = $AccessToken
-        }
-        Set-DynatracePSConfig @splatParm
+        Set-DynatracePSConfig -EnvironmentID $EnvironmentID -AccountUuid $AccountUuid
         $config | Should -Exist
     }
 
-    AfterAll {
+    It "Given config parameters set previously, Get-DynatracePSConfig will return the values" {
+        
+    }
+
+    AfterAll {       
         if (Test-Path $configBackup) {
             Write-Verbose "Moving original config back to $config"
             Move-Item $configBackup $config -Force
