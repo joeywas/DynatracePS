@@ -49,7 +49,7 @@ function Invoke-DynatraceAPIMethod {
         Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Function started"
         Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Function started. PSBoundParameters: $($PSBoundParameters | Out-String)"
 
-#region AuthHeaders
+#region Headers
         $config = Get-DynatracePSConfig
         $access_token = $config.accesstoken
 
@@ -61,7 +61,10 @@ function Invoke-DynatraceAPIMethod {
         $_headers = @{
             Authorization = "Api-Token $access_token"
         }
-#endregion AuthHeaders
+        if ($Headers) {
+            $_headers += $Headers
+        }
+#endregion Headers
 
         $uriQuery = ConvertTo-ParameterHash -Uri $Uri
 
@@ -76,8 +79,11 @@ function Invoke-DynatraceAPIMethod {
                 Uri = $FinalURI
                 Method = $Method
                 Headers = $_headers
+                ResponseHeadersVariable = 'ResponseHeaders'
+                StatusCodeVariable = 'StatusCode'
             }
             if ($body) {
+                Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] body: $($body | Out-String)"
                 $splatParameters += @{
                     Body = $body
                 }
@@ -87,7 +93,14 @@ function Invoke-DynatraceAPIMethod {
                     ContentType = $ContentType
                 }
             }
+
+            Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] splatParameters: $($splatParameters | Out-String)"
+
             $RestResponse = Invoke-RestMethod @splatParameters
+            Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] RestResponse: $($RestResponse | Out-String)"
+            Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] ResponseHeaders: $($ResponseHeaders | Out-String)"
+            Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] StatusCode: $($StatusCode | Out-String)"
+
         } catch {
             Write-Warning "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Problem with Invoke-RestMethod $uri"
             $_
@@ -95,7 +108,7 @@ function Invoke-DynatraceAPIMethod {
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Executed RestMethod"
 
-        Test-ServerResponse -InputObject $RestResponse
+        Test-ServerResponse -InputObject $RestResponse -StatusCode $StatusCode
     }
 
     process {
