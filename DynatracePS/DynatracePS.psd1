@@ -78,6 +78,9 @@ FunctionsToExport = 'Get-DynatracePSConfig', 'Set-DynatracePSConfig',
                'Get-DynatraceQuota', 'Get-DynatraceEffectivePermission', 
                'Get-DynatraceSubscription',
                'Get-DynatraceManagementZone','Get-DynatraceManagementZoneProperty',
+               'New-DynatraceManagementZone','Update-DynatraceManagementZone',
+               'Remove-DynatraceManagementZone','Rename-DynatraceManagementZone',
+               'New-DynatraceMzRuleHostGroup',
                'Get-DynatraceEntityType',
                'Get-DynatraceEntity','Get-DynatraceEntityProperty',
                'Get-DynatraceHost','Get-DynatraceHostProperty',
@@ -86,8 +89,7 @@ FunctionsToExport = 'Get-DynatracePSConfig', 'Set-DynatracePSConfig',
                'Get-DynatraceProcess','Get-DynatraceProcessProperty',
                'Get-DynatraceContainer',
                'Get-DynatraceSettingsSchema',
-               'Get-DynatraceTag',
-               'Rename-DynatraceManagementZone'
+               'Get-DynatraceTag'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
