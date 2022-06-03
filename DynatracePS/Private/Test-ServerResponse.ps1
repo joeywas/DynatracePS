@@ -9,7 +9,8 @@ function Test-ServerResponse {
     #>
     param (
         [Parameter( ValueFromPipeline )]
-        [PSObject]$InputObject
+        [PSObject]$InputObject,
+        [string]$StatusCode
     )
 
     begin {
@@ -18,12 +19,14 @@ function Test-ServerResponse {
     }
 
     process {
-        if ($InputObject.Code -eq 204) {
-            Write-Debug "[$($MyInvocation.MyCommand.Name)] Response code 204: Valid payload"
-            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Response code 204: Valid payload"
-        } elseif ($InputObject.Code -gt 200) {
+        if ($StatusCode -in (201,204)) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Response code $StatusCode : Success"
+            Write-Verbose "[$($MyInvocation.MyCommand.Name)] Response code $StatusCode : Success"
+        } elseif ($StatusCode -gt 204) {
             Write-Debug "[$($MyInvocation.MyCommand.Name)] Error code found, throwing error"
-            throw ("{0}: {1}" -f $InputObject.Code,($InputObject.message -join ','))
+            throw ("Code {0}: {1}" -f $StatusCode,($InputObject.message -join ','))
+        } else {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Code: $StatusCode"
         }
     }
 

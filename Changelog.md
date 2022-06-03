@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.7] - 2022-06-01
+### Added
+-Function New-DynatraceManagementZone to create a management zone
+-Function Update-DynatraceManagementZone to update a management zone
+-Function Remove-DynatraceManagementZone to remove a management zone
+-Function New-DynatraceMzRuleHostGroup to generate a management zone rule object for host group mapping
+### Modified
+-Function Test-ServerResponse accepts a status code parm and checks that 
+-Function Invoke-DynatraceAPIMethod now uses output variables for response headers and status code. also mohr debugging.
+
 ## [0.1.6] - 2022-05-09
 ### Added
 -Function Rename-DynatraceManagementZone to rename management zones
