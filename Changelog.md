@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2022-06-02
+### Modified
+-Added OutputNotNested parm to function Get-DynatraceGroupPermission for outputing to Excel or FT
+
 ## [0.1.7] - 2022-06-01
 ### Added
 -Function New-DynatraceManagementZone to create a management zone
