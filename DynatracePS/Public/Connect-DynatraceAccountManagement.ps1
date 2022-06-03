@@ -65,14 +65,18 @@ function Connect-DynatraceAccountManagement {
         $ExistingTokenExpiration = $MyInvocation.MyCommand.Module.PrivateData.token_expires
         $Now = Get-Date
         if (($Now -lt $ExistingTokenExpiration) -and (-not $GetNewtoken)) {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Existing token should still be good, using it"
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Existing token should still be good, using it"
             $GetTokenReturn = $MyInvocation.MyCommand.Module.PrivateData |
                 Select-Object scope,token_type,expires_in,access_token,resource
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Expires_in: $($GetTokenReturn.expires_in)"
         } else {
+            Write-Debug "[$($MyInvocation.MyCommand.Name)] Getting new token"
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Getting new token"
             try {
                 $GetTokenReturn = Invoke-RestMethod -Uri $GetTokenURL -Method POST -Body $body -ContentType $ContentType
                 Write-Verbose "[$($MyInvocation.MyCommand.Name)] Adding results to module PrivateData"
+                Write-Debug "[$($MyInvocation.MyCommand.Name)] Adding results to module PrivateData"
                 $MyInvocation.MyCommand.Module.PrivateData = @{
                     'scope' = $GetTokenReturn.scope
                     'token_type' = $GetTokenReturn.token_type
@@ -81,6 +85,7 @@ function Connect-DynatraceAccountManagement {
                     'resource' = $GetTokenReturn.resource
                     'token_expires' = (Get-Date).AddSeconds($GetTokenReturn.expires_in)
                 }
+                Write-Debug "[$($MyInvocation.MyCommand.Name)] Expires_in: $($GetTokenReturn.expires_in)"
             } catch {
                 Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with invoke-restmethod $GetTokenURL"
                 $_
