@@ -214,11 +214,14 @@ task Build -if($Configuration -eq "Release"){
         $publicFunctions = Get-ChildItem -Path ".\DynatracePS\Public\*.ps1"
         $privateFunctions = Get-ChildItem -Path ".\DynatracePS\Private\*.ps1"
         #$totalFunctions = $publicFunctions.count + $privateFunctions.count
-        $ModuleBuildNumber = $oldModuleVersion.Build + 1
+        #$ModuleBuildNumber = $oldModuleVersion.Build + 1
+        $ModuleBuildNumber = $oldModuleVersion.Build
         Write-Verbose -Message "Updating the Moduleversion"
         $Script:ModuleVersion = "$($oldModuleVersion.Major).$($oldModuleVersion.Minor).$($ModuleBuildNumber)"
         Write-Verbose "Mew ModuleVersion: $ModuleVersion"
-        Update-ModuleManifest -Path ".\DynatracePS\$($ModuleName).psd1" -ModuleVersion $ModuleVersion
+        # No updating the module version for now
+        #
+        # Update-ModuleManifest -Path ".\DynatracePS\$($ModuleName).psd1" -ModuleVersion $ModuleVersion
     }
 
     if(Test-Path ".\Output\$($ModuleName)\$($ModuleVersion)"){

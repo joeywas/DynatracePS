@@ -79,8 +79,6 @@ function Invoke-DynatraceAPIMethod {
                 Uri = $FinalURI
                 Method = $Method
                 Headers = $_headers
-                ResponseHeadersVariable = 'ResponseHeaders'
-                StatusCodeVariable = 'StatusCode'
             }
             if ($body) {
                 Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] body: $($body | Out-String)"
@@ -96,7 +94,11 @@ function Invoke-DynatraceAPIMethod {
 
             Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] splatParameters: $($splatParameters | Out-String)"
 
-            $RestResponse = Invoke-RestMethod @splatParameters
+            $Response = Invoke-WebRequest @splatParameters
+            $RestResponse = $Response.Content | ConvertFrom-JSON
+            $ResponseHeaders = $Response.Headers
+            $StatusCode = $Response.StatusCode
+
             Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] RestResponse: $($RestResponse | Out-String)"
             Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] ResponseHeaders: $($ResponseHeaders | Out-String)"
             Write-Debug "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] StatusCode: $($StatusCode | Out-String)"

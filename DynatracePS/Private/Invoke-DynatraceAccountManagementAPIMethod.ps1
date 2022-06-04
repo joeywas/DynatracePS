@@ -40,9 +40,15 @@ function Invoke-DynatraceAccountManagementAPIMethod {
 
         process {
             try {
-                $output = Invoke-RestMethod -Uri $Uri -Method $Method -Headers $headers
+                $splatParameters = @{
+                    Uri = $Uri 
+                    Method = $Method 
+                    Headers = $headers
+                }
+                $Return = Invoke-WebRequest @splatParameters
+                $output = $Return.Content | ConvertFrom-JSON
             } catch {
-                Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with Invoke-RestMethod $uri"
+                Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with Invoke-WebRequest $uri"
                 $_
                 break
             }
