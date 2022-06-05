@@ -6,8 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.9] - 2022-06-02
-Skip ahead
+## [0.1.11]
+### Modified
+-Replaced Invoke-RestMethod with Invoke-WebRequest in order to provide better support across various PS versions 
+### Fixed
+-Function Connect-DynatraceAccountManagement now handles caching of token correctly
+
+## [0.1.9] - [0.1.10] - 2022-06-02
+Skip ahead / versioning issue
 
 ## [0.1.8] - 2022-06-02
 ### Modified

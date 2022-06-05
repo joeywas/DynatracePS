@@ -58,26 +58,33 @@ function Connect-DynatraceAccountManagement {
             resource = $resource
         }
         $ContentType = 'application/x-www-form-urlencoded'
+
+        $TokenData = $MyInvocation.MyCommand.Module.PrivateData.TokenData
     }
 
     process {
-
-        $ExistingTokenExpiration = $MyInvocation.MyCommand.Module.PrivateData.token_expires
+        Write-Debug "[$($MyInvocation.MyCommand.Name)] TokenData: $($TokenData | Out-String)"
+        
         $Now = Get-Date
-        if (($Now -lt $ExistingTokenExpiration) -and (-not $GetNewtoken)) {
+
+        if (($Now -lt $TokenData.token_expires) -and (-not $GetNewtoken)) {
             Write-Debug "[$($MyInvocation.MyCommand.Name)] Existing token should still be good, using it"
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Existing token should still be good, using it"
-            $GetTokenReturn = $MyInvocation.MyCommand.Module.PrivateData |
-                Select-Object scope,token_type,expires_in,access_token,resource
-            Write-Debug "[$($MyInvocation.MyCommand.Name)] Expires_in: $($GetTokenReturn.expires_in)"
         } else {
             Write-Debug "[$($MyInvocation.MyCommand.Name)] Getting new token"
             Write-Verbose "[$($MyInvocation.MyCommand.Name)] Getting new token"
             try {
-                $GetTokenReturn = Invoke-RestMethod -Uri $GetTokenURL -Method POST -Body $body -ContentType $ContentType
-                Write-Verbose "[$($MyInvocation.MyCommand.Name)] Adding results to module PrivateData"
+                $splatParameter = @{
+                    Uri = $GetTokenURL 
+                    Method = 'POST' 
+                    Body = $body 
+                    ContentType = $ContentType
+                }
+                $GetTokenReturn = (Invoke-WebRequest @splatParameter).Content | ConvertFrom-Json
+
                 Write-Debug "[$($MyInvocation.MyCommand.Name)] Adding results to module PrivateData"
-                $MyInvocation.MyCommand.Module.PrivateData = @{
+                
+                $TokenData = @{
                     'scope' = $GetTokenReturn.scope
                     'token_type' = $GetTokenReturn.token_type
                     'expires_in' = $GetTokenReturn.expires_in
@@ -85,16 +92,16 @@ function Connect-DynatraceAccountManagement {
                     'resource' = $GetTokenReturn.resource
                     'token_expires' = (Get-Date).AddSeconds($GetTokenReturn.expires_in)
                 }
-                Write-Debug "[$($MyInvocation.MyCommand.Name)] Expires_in: $($GetTokenReturn.expires_in)"
+                $MyInvocation.MyCommand.Module.PrivateData.TokenData = $TokenData
             } catch {
-                Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with invoke-restmethod $GetTokenURL"
+                Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem getting $GetTokenURL"
                 $_
                 break
             }
         }
 
         # return everything to the pipeline
-        $GetTokenReturn
+        $TokenData
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
