@@ -1,4 +1,4 @@
-Name: Publish To Gallery
+name: Publish To Gallery
 on:
     workflow_dispatch: # Enables the possibility to trigger the workflow manually
 jobs:
