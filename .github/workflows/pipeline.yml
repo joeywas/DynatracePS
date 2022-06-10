@@ -63,7 +63,7 @@ jobs:
 Name: Publish To Gallery
 on:
     workflow_dispatch: # Enables the possibility to trigger the workflow manually
-  jobs:
+jobs:
     publish-to-gallery:
         #needs: build
         runs-on: ubuntu-latest
