@@ -3,6 +3,8 @@ PowerShell module to interact with Dynatrace SaaS APIs
 
 [![Dev Branch](https://github.com/joeywas/DynatracePS/actions/workflows/pipeline.yml/badge.svg?branch=dev)](https://github.com/joeywas/DynatracePS/actions/workflows/pipeline.yml)
 
+[![Publish To Gallery](https://github.com/joeywas/DynatracePS/actions/workflows/publish-to-gallery.yml/badge.svg)](https://github.com/joeywas/DynatracePS/actions/workflows/publish-to-gallery.yml)
+
 ## Getting Started
 
 Install the DynatracePS module from PSGallery for the current user
@@ -39,6 +41,7 @@ Get-DynatraceManagementZone
 These functions require an accountUuid and OAuthClientSecret be configured with `Set-DynatracePSConfig`
 
 - Get-DynatraceUser
+- Get-DynatraceUserLastLogin
 - Get-DynatraceUserGroup
 - Get-DynatraceGroup
 - Get-DynatraceGroupUser
