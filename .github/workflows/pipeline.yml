@@ -59,32 +59,3 @@ jobs:
               with:
                 name: DynatracePS # naming the powershell module artifact
                 path: .\Output\ # saving the powershell module artifact to the path .Output/
-
-Name: Publish To Gallery
-on:
-    workflow_dispatch: # Enables the possibility to trigger the workflow manually
-  jobs:
-    publish-to-gallery:
-        #needs: build
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v3
-        - name: Download build artifact
-          uses: aochmann/actions-download-artifact@1.0.4
-          with:
-            repo: ${{github.repository}}
-            name: DynatracePS
-            path: Artifact/
-        - name: Publish to gallery
-          shell: pwsh
-          env:
-            NUGET_KEY: ${{ secrets.NUGET_KEY }}
-          run: |
-            $psmFileName = (Get-ChildItem Artifact/*.psm1 -Recurse).FullName
-            Import-Module $psmFileName -Verbose -Force
-            $ModuleFolder = Split-Path (Get-ChildItem Artifact/*.psd1 -Recurse)
-            if (Get-Module -Name 'DynatracePS') {
-              Publish-Module -Path $ModuleFolder -NuGetApiKey "$env:NUGET_KEY" -Verbose
-            } else {
-              Write-Host "Unable to get module 'DynatracePS'"
-            }
