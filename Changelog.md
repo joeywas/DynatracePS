@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.13] - 2022-06-10
+### Added
+-Get-DynatraceProblem to get problems
+-Internal function ConvertTo-Datetime to convert millisecond timestamps used in dynatrace to human readable local time
+
 ## [0.1.12]
 ### Added
 -Get-DyntraceUserLastLogin to get user name and last login time
