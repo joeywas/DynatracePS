@@ -6,11 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.1.14]
+### Added
+-Function Get-DynatraceManagementZoneRule to get all the rules associated with a management zone
+-Function Get-DynatraceHostsInHostGroup to return a list of hosts and related host groups
+
 ## [0.1.12]
 ### Added
--Get-DyntraceUserLastLogin to get user name and last login time
+-Function Get-DyntraceUserLastLogin to get user name and last login time
 ### Modified
--Get-DynatraceGroupPermission to output MZ name instead of MZ id so it's easier to grok
+-Function Get-DynatraceGroupPermission to output MZ name instead of MZ id so it's easier to grok
 
 ## [0.1.11]
 ### Modified

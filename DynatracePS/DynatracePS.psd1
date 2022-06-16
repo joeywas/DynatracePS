@@ -12,7 +12,7 @@
     RootModule = 'DynatracePS.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.1.12'
+    ModuleVersion = '0.1.14'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -84,12 +84,14 @@
         'Get-DynatracePermission', 
         'Get-DynatraceManagementZone',
         'Get-DynatraceManagementZoneProperty',
+        'Get-DynatraceManagementZoneRule',
         'Get-DynatraceQuota', 
         'Get-DynatraceEffectivePermission', 
         'Get-DynatraceEntity',
         'Get-DynatraceEntityProperty',
         'Get-DynatraceHost',
         'Get-DynatraceHostProperty',
+        'Get-DynatraceHostsInHostGroup',
         'Get-DynatraceHostGroup',
         'Get-DynatraceHostGroupProperty',
         'Get-DynatraceProcessGroup',
