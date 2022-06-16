@@ -1,13 +1,18 @@
 function Join-Hashtable {
-    <#
-	.SYNOPSIS
-		Combines multiple hashtables into a single table.
-	.DESCRIPTION
-		Combines multiple hashtables into a single table.
-		On multiple identic keys, the last wins.
-	.EXAMPLE
-		PS C:\> Join-Hashtable -Hashtable $Hash1, $Hash2
-		Merges the hashtables contained in $Hash1 and $Hash2 into a single hashtable.
+<#
+.SYNOPSIS
+    Combines multiple hashtables into a single table.
+
+.DESCRIPTION
+    Combines multiple hashtables into a single table.
+    On multiple identic keys, the last wins.
+
+.PARAMETER Hashtable
+    Hash tables to merge together
+
+.EXAMPLE
+    PS C:\> Join-Hashtable -Hashtable $Hash1, $Hash2
+    Merges the hashtables contained in $Hash1 and $Hash2 into a single hashtable.
 #>
     [CmdletBinding()]
     [OutputType([System.Collections.Hashtable])]

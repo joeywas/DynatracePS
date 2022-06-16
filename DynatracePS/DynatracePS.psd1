@@ -94,6 +94,7 @@
         'Get-DynatraceHostsInHostGroup',
         'Get-DynatraceHostGroup',
         'Get-DynatraceHostGroupProperty',
+        'Get-DynatraceProblem',
         'Get-DynatraceProcessGroup',
         'Get-DynatraceProcessGroupProperty',
         'Get-DynatraceProcess',

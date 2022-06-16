@@ -6,11 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
-## [0.1.14]
+## [0.1.14] - 2022-06-10
 ### Added
 -Function Get-DynatraceManagementZoneRule to get all the rules associated with a management zone
 -Function Get-DynatraceHostsInHostGroup to return a list of hosts and related host groups
+
+## [0.1.13] - 2022-06-10
+### Added
+-Get-DynatraceProblem to get problems
+-Internal function ConvertTo-Datetime to convert millisecond timestamps used in dynatrace to human readable local time
 
 ## [0.1.12]
 ### Added
