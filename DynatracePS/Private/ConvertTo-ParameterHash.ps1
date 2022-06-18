@@ -1,4 +1,17 @@
 function ConvertTo-ParameterHash {
+<#
+.SYNOPSIS
+    Given a URI or uri query, return the query portion as a hash table. For internal use
+
+.DESCRIPTION
+    Extract query portion from a URI and return it as a hash table. For internal use
+
+.PARAMETER Uri
+    Uri to extract query from and convert to hash
+
+.PARAMETER Query
+    Query to convert to hash
+#>
     [CmdletBinding( DefaultParameterSetName = 'ByString' )]
     param (
         # URI from which to use the query
