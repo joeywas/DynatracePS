@@ -94,13 +94,9 @@
         'Get-DynatraceHostsInHostGroup',
         'Get-DynatraceHostGroup',
         'Get-DynatraceHostGroupProperty',
-<<<<<<< HEAD
         'Get-DynatraceHTTPCheck',
         'Get-DynatraceHTTPCheckProperty',
-=======
         'Get-DynatraceProblem',
->>>>>>> ad5e3079fdc314e44837dec6ab1f316e5e06eaa2
-        'Get-DynatraceProcessGroup',
         'Get-DynatraceProcessGroupProperty',
         'Get-DynatraceProcess',
         'Get-DynatraceProcessProperty',
@@ -112,7 +108,8 @@
         'New-DynatraceMzRuleHostGroup',
         'Remove-DynatraceManagementZone',
         'Rename-DynatraceManagementZone',
-        'Update-DynatraceManagementZone'
+        'Update-DynatraceManagementZone',
+        'Get-DynatraceProcessGroup'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
