@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.15]
+### Added
+-Function Get-DynatraceHTTPCheck to get all the http checks in dynatrace
+-Function Get-DynatraceHTTPCheckProperty to get properties for an http check
 
 ## [0.1.14]
 ### Added
