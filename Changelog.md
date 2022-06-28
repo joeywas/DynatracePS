@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.16] - 2022-06-27
+### Added
+-Function Get-DynatraceHTTPCheckStatus to get status of http checks
+-Function Get-DynatraceSyntheticLocation to get list of locations available for synthetic checks
+
 ## [0.1.15] - 2022-06-17
 ### Added
 -Function Get-DynatraceHTTPCheck to get all the http checks in dynatrace
