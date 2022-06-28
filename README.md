@@ -63,6 +63,7 @@ These functions require an environmentID and AccessToken be configured with `Set
 - Get-DynatraceHostInHostGroup
 - Get-DynatraceHTTPCheck
 - Get-DynatraceHTTPCheckProperty
+- Get-DynatraceHTTPCheckStatus
 - Get-DynatraceManagementZone
 - Get-DynatraceManagementZoneProperty
 - Get-DynatraceManagementZoneRule
@@ -71,6 +72,7 @@ These functions require an environmentID and AccessToken be configured with `Set
 - Get-DynatraceProcessGroupProperty
 - Get-DynatraceProcessProperty
 - Get-DynatraceSettingsSchema
+- Get-DynatraceSyntheticLocation
 - Get-DynatraceTag
 - New-DynatraceManagementZone
 - Remove-DynatraceManagementZone
