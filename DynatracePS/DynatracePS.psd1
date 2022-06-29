@@ -12,7 +12,7 @@
     RootModule = 'DynatracePS.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.1.16'
+    ModuleVersion = '0.1.17'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -70,13 +70,13 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        'Get-DynatracePSConfig',
-        'Set-DynatracePSConfig',
         'Connect-DynatraceAccountManagement', 
-        'Get-DynatraceUser', 
-        'Get-DynatraceUserLastLogin',
-        'Get-DynatraceUserGroup', 
+        'Get-DynatraceAlertingProfile', 
+        'Get-DynatraceContainer',
+        'Get-DynatraceEffectivePermission', 
         'Get-DynatraceEntityType',
+        'Get-DynatraceEntity',
+        'Get-DynatraceEntityProperty',
         'Get-DynatraceEnvironment', 
         'Get-DynatraceGroup',
         'Get-DynatraceGroupPermission', 
@@ -85,10 +85,8 @@
         'Get-DynatraceManagementZone',
         'Get-DynatraceManagementZoneProperty',
         'Get-DynatraceManagementZoneRule',
+        'Get-DynatraceNotification',
         'Get-DynatraceQuota', 
-        'Get-DynatraceEffectivePermission', 
-        'Get-DynatraceEntity',
-        'Get-DynatraceEntityProperty',
         'Get-DynatraceHost',
         'Get-DynatraceHostProperty',
         'Get-DynatraceHostsInHostGroup',
@@ -100,18 +98,22 @@
         'Get-DynatraceProblem',
         'Get-DynatraceProcessGroupProperty',
         'Get-DynatraceProcess',
+        'Get-DynatraceProcessGroup',
         'Get-DynatraceProcessProperty',
-        'Get-DynatraceContainer',
+        'Get-DynatracePSConfig',
         'Get-DynatraceSettingsSchema',
-        'Get-DynatraceTag',
         'Get-DynatraceSubscription',
         'Get-DynatraceSyntheticLocation',
+        'Get-DynatraceTag',
+        'Get-DynatraceUser', 
+        'Get-DynatraceUserLastLogin',
+        'Get-DynatraceUserGroup',
         'New-DynatraceManagementZone',
         'New-DynatraceMzRuleHostGroup',
         'Remove-DynatraceManagementZone',
         'Rename-DynatraceManagementZone',
-        'Update-DynatraceManagementZone',
-        'Get-DynatraceProcessGroup'
+        'Set-DynatracePSConfig',
+        'Update-DynatraceManagementZone'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

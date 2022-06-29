@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.17] - 2022-06-28
+### Added
+-Function Get-DynatraceAlertingProfile to get one or more alerting profiles
+-Function Get-DynatraceNotification to get a list of notifications, or details on a single notification
+
 ## [0.1.16] - 2022-06-27
 ### Added
 -Function Get-DynatraceHTTPCheckStatus to get status of http checks

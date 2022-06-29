@@ -52,6 +52,7 @@ Get-DynatraceManagementZone
 
 These functions require an environmentID and AccessToken be configured with `Set-DynatracePSConfig`
 
+- Get-DynatraceAlertingProfile
 - Get-DynatraceContainer
 - Get-DynatraceEntity
 - Get-DynatraceEntityProperty
@@ -67,6 +68,7 @@ These functions require an environmentID and AccessToken be configured with `Set
 - Get-DynatraceManagementZone
 - Get-DynatraceManagementZoneProperty
 - Get-DynatraceManagementZoneRule
+- Get-DynatraceNotification
 - Get-DynatraceProcess
 - Get-DynatraceProcessGroup
 - Get-DynatraceProcessGroupProperty
