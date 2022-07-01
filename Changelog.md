@@ -1,10 +1,16 @@
 # Changelog
-All notable changes to IvantiPS project will be documented in this file.
+All notable changes to DynatracePS will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.18] - 2022-06-30
+### Added
+-Function Get-DynatraceDatabase to return database services in Dynatrace
+### Modified
+-Function Get-DynatraceEntityType to accept -Type parameter, which will return available properties for that Entity Type
 
 ## [0.1.17] - 2022-06-28
 ### Added

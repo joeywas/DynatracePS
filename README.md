@@ -54,6 +54,7 @@ These functions require an environmentID and AccessToken be configured with `Set
 
 - Get-DynatraceAlertingProfile
 - Get-DynatraceContainer
+- Get-DynatraceDatabase
 - Get-DynatraceEntity
 - Get-DynatraceEntityProperty
 - Get-DynatraceEntityType
