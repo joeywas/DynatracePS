@@ -12,7 +12,7 @@
     RootModule = 'DynatracePS.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.1.18'
+    ModuleVersion = '0.1.19'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -72,6 +72,7 @@
     FunctionsToExport = @(
         'Connect-DynatraceAccountManagement', 
         'Get-DynatraceAlertingProfile', 
+        'Get-DynatraceAuditLog', 
         'Get-DynatraceContainer',
         'Get-DynatraceDatabase',
         'Get-DynatraceEffectivePermission', 

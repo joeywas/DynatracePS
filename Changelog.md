@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.19] - 2022-08-24
+### Added
+-Function Get-DynatraceAuditLog
+
 ## [0.1.18] - 2022-06-30
 ### Added
 -Function Get-DynatraceDatabase to return database services in Dynatrace
