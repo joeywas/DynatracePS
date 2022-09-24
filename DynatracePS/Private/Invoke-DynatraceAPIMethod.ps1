@@ -156,7 +156,7 @@ function Invoke-DynatraceAPIMethod {
                 if (-not $NextPageKey) {
                     # if there is no page key, then quit, as there are no more pages
                     #
-                    return
+                    break
                 } else {
                     # Output results from this loop, and continue on the recursion
                     #
