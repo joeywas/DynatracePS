@@ -64,7 +64,7 @@ function Get-DynatraceEffectivePermission {
             Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
-            break
+            return
         }
     }
     end {

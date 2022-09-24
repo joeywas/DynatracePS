@@ -1,20 +1,34 @@
 function Get-DynatraceSettingsSchema {
 <#
     .SYNOPSIS
-        Get list of settings schemas in Dynatrace environment
+        Get settings schemas in Dynatrace environment. Returns list if no schemaid value is passed in
 
-    .DESCRIPTION
-        Get list of settings schemas in Dynatrace environment
+    .PARAMETER SchemaID
+        The ID of the required schema. Optional.
+
+    .PARAMETER OutputAsJson
+        Output the properties as a JSON string
 
     .EXAMPLE
         Get-DynatraceSettingsSchema
 
+        Get list of Setting schemas
+
+    .EXAMPLE
+        Get-DynatraceSettingsSchema -SchemaID builtin:custom-metrics
+
+        Get the builtin:custom-metrics schema id
+
     .NOTES
         https://api.dynatrace.com/spec/#/
+        https://www.dynatrace.com/support/help/dynatrace-api/environment-api/settings/schemas/get-schema
 #>
 
     [CmdletBinding()]
-    param()
+    param(
+        [string]$SchemaID,
+        [switch]$OutputAsJson
+    )
 
     begin {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Function started"
@@ -28,17 +42,33 @@ function Get-DynatraceSettingsSchema {
     }
 
     process {
+        if ($SchemaID) {
+            $uri = "$uri/$SchemaID"
+            $RestResponseProperty = $null
+        } else {
+            $RestResponseProperty = 'items'
+        }
+
         $splatParameters = @{
             Uri = $uri
-            RestResponseProperty = 'items'
+            RestResponseProperty = $RestResponseProperty
         }
-        Invoke-DynatraceAPIMethod @splatParameters
+        try {
+            $output = Invoke-DynatraceAPIMethod @splatParameters
+        } catch {
+            $_
+            return
+        }
+        
+        if ($OutputAsJson) {
+            $output | ConvertTo-Json -Depth 6
+        } else {
+            $output
+        }
+
     }
     end {
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Complete"
         Write-Debug "[$($MyInvocation.MyCommand.Name)] Complete"
     }
 }
-
-
-

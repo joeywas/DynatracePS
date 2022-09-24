@@ -50,7 +50,7 @@ function Invoke-DynatraceAccountManagementAPIMethod {
             } catch {
                 Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem with Invoke-WebRequest $uri"
                 $_
-                break
+                return
             }
             if ($OutputAsJson) {
                 $output | ConvertTo-Json -Depth 6

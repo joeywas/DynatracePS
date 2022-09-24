@@ -39,11 +39,11 @@ function Connect-DynatraceAccountManagement {
 
         if (-not $AccountUuid) {
             Write-Warning "[$($MyInvocation.MyCommand.Name)] AccountUuid is required. Please use Set-DynatracePSConfig first. Exiting..."
-            break
+            return
         }
         if (-not $OauthClientSecret) {
             Write-Warning "[$($MyInvocation.MyCommand.Name)] OauthClientSecret is required. Please use Set-DynatracePSConfig first. Exiting..."
-            break
+            return
         }
 
         $GetTokenURL = 'https://sso.dynatrace.com/sso/oauth2/token'
@@ -96,7 +96,7 @@ function Connect-DynatraceAccountManagement {
             } catch {
                 Write-Warning "[$($MyInvocation.MyCommand.Name)] Problem getting $GetTokenURL"
                 $_
-                break
+                return
             }
         }
 

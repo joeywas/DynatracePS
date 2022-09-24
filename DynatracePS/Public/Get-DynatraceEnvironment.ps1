@@ -39,7 +39,7 @@ function Get-DynatraceEnvironment {
             Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
-            break
+            return
         }
     }
     end {

@@ -40,7 +40,7 @@ function Get-DynatraceUser {
             $return = Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
-            break
+            return
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Count of results: $($return.count)"
         if ($OutputAsJson) {

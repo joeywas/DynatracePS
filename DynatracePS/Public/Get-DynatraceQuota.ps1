@@ -39,7 +39,7 @@ function Get-DynatraceQuota {
             Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
-            break
+            return
         }
     }
     end {

@@ -55,7 +55,7 @@ function Invoke-DynatraceAPIMethod {
 
         if (-not $access_token) {
             Write-Warning "[$($MyInvocation.MyCommand.Name) $Level] Must first configure an access token with Set-DynatracePSConfig -AccessToken <token>. Exiting..."
-            break
+            return
         }
 
         $_headers = @{
@@ -124,7 +124,7 @@ function Invoke-DynatraceAPIMethod {
         } catch {
             Write-Warning "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Problem with Invoke-RestMethod $uri"
             $_
-            break
+            return
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name) $LevelOfRecursion] Executed RestMethod"
 

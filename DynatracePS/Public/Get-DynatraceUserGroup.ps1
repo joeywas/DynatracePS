@@ -42,7 +42,7 @@ function Get-DynatraceUserGroup {
             Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
-            break
+            return
         }
     }
     end {
