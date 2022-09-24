@@ -39,7 +39,7 @@ function Get-DynatraceSubscription {
             $return = Invoke-DynatraceAccountManagementAPIMethod @splatParameters
         } catch {
             $_
-            break
+            return
         }
         Write-Verbose "[$($MyInvocation.MyCommand.Name)] Count of results: $($return.totalCount)"
         if ($OutputAsJson) {

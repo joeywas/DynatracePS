@@ -99,7 +99,7 @@ function Get-DynatraceGroupPermission {
             }
         } catch {
             $_
-            break
+            return
         }
     }
     end {

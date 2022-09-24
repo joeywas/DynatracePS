@@ -45,7 +45,7 @@ function Get-DynatracePSConfig {
         } else {
             Write-Warning "[$($MyInvocation.MyCommand.Name)] No config found at [$config]"
             Write-Warning "[$($MyInvocation.MyCommand.Name)] Use Set-DynatracePSConfig first!"
-            break
+            return
         }
         $Output
     }
