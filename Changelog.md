@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.21] - 2022-09-29
+### Added
+-Get-DynatraceSettingsObject to return one or more setting objects
+
 ## [0.1.20] - 2022-09-23
 ### Modified
 -Function Get-DynatraceSettingsSchema to accept schema id and output as JSON
